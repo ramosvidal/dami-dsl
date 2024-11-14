@@ -1,0 +1,28 @@
+CREATE BIDI bvg;
+
+CREATE CONNECTION FROM (dbname bvg, host localhost, port 5432, user postgres, pwd postgres, schema public);
+
+CREATE CONNECTION TO (dbname bvg_bidi, host localhost, port 5432, user postgres, pwd postgres, schema public);
+
+DECOMPOSE autor USING authority, contact (
+    TABLE authority:
+        nome_real TO name,
+        sexo TO gender,
+        dia_nac TO birthdate,
+        ano_mor TO deathdate,
+        seculo TO century,
+        narrativa TO genre,
+        localidade TO region,
+        SAVE RELATION autor.id AS autor_id character(25) EQUALS authority.id bigint
+    TABLE contact:
+        localidade TO city,
+        email TO email,
+        mobil TO phone,
+        cp TO postal_code, 
+        provincia TO province,
+        rua TO street,
+        inter_web TO web,
+        SAVE RELATION autor.id AS autor_id character(25) EQUALS contact.id bigint
+) FOREIGN KEY authority.contact REFERENCES contact.id;
+
+GENERATE SCRIPT bvg;

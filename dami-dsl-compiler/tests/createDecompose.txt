@@ -1,0 +1,19 @@
+CREATE BIDI bvg;
+
+CREATE CONNECTION old(dbname bvg, host localhost, port 5432, user postgres, password postgres);
+
+DECOMPOSE autor USING id {
+    autor.localidade: contact.city,
+    autor.email: contact.email,
+    COALLESCE(autor.telf_casa, autor.telf_trab, autor.mobil): contact.phone,
+    autor.CP: contact.postal_code
+    autor.provincia: contact.province,
+    autor.rua: contact.street, 
+    autor.inter_web: contact.web
+};
+
+
+
+DROP CONNECTION;
+
+GENERATE SCRIPT bvg;

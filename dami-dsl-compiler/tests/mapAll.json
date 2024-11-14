@@ -1,0 +1,54 @@
+{
+  "name": "mapall",
+  "connectionFrom": {
+    "dbname": "bvg",
+    "host": "localhost",
+    "port": "5432",
+    "user": "postgres",
+    "password": "postgres",
+    "schema": "public",
+    "auxiliarSchema": "aux",
+    "originalSchema": "old"
+  },
+  "connectionTo": {
+    "dbname": "bvg",
+    "host": "localhost",
+    "port": "5432",
+    "user": "postgres",
+    "password": "postgres",
+    "schema": "public",
+    "auxiliarSchema": null
+  },
+  "schemas": [
+    {
+      "name": "legacy",
+      "entities": []
+    },
+    {
+      "name": "public",
+      "entities": []
+    },
+    {
+      "name": "helper",
+      "entities": []
+    },
+    {
+      "name": "old",
+      "entities": []
+    },
+    {
+      "name": "aux",
+      "entities": []
+    }
+  ],
+  "entities": [
+    {
+      "name": "authority",
+      "properties": [],
+      "columns": [],
+      "mappings": []
+    }
+  ],
+  "relationships": [],
+  "enums": []
+}

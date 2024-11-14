@@ -1,0 +1,19 @@
+CREATE BIDI bvg;
+
+CREATE CONNECTION (dbname bvg, host localhost, port 5432, user postgres, password postgres);
+
+IMPORT ORIGINAL SCHEMA public INTO old;
+
+MAP TABLE autor (PK id) TO authority (PK id) USING {
+    CONCAT(nome_real, apelidos_real): name, 
+    MAP(sexo, ): gender, 
+    COALESCE(autor.dia_nac, autor.mes_nac, autor.ano_nac): authority.birthdate, 
+    autor.ano_mor: authority.deathdate, 
+    autor.seculo: authority.century, 
+    COALESCE(autor.narrativa, autor.poesia, autor.lit_inf_xuv, autor.teatro, autor.ensaio, autor.ensaio_galego, autor.outro_tipo):genre, 
+    COALESCE(autor.localidade, autor.provincia): authority.region
+}
+
+DROP CONNECTION;
+
+GENERATE SCRIPT bvg;

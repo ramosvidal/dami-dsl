@@ -1,0 +1,11 @@
+CREATE BIDI bvg;
+
+CREATE CONNECTION (dbname bvg, host localhost, port 5432, user postgres, password postgres);
+
+IMPORT SCHEMA public INTO old;
+
+DROP SCHEMA old;
+
+DROP CONNECTION;
+
+GENERATE SCRIPT bvg;

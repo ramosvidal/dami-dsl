@@ -1,0 +1,127 @@
+CREATE PRODUCT bvg;
+
+CREATE CONNECTION FROM (dbname bvg, host localhost, port 5432, user postgres, pwd postgres, schema public);
+
+CREATE CONNECTION TO (dbname bvg_bidi, host localhost, port 5432, user postgres, pwd postgres, schema public);
+
+DECOMPOSE autor USING authority, contact (
+    TABLE authority:
+        CONCAT(' ', nome_real, apelidos_real) TO name,
+        sexo TO gender,
+        DATEFROMPARTS(ano_nac, mes_nac, dia_nac) TO birthdate,
+        DATEFROMPARTS(ano_mor, null, null) TO deathdate,
+        seculo TO century,
+        CONCAT(',',narrativa, poesia, lit_inf_xuv, teatro, ensaio, ensaio_galego, outro_tipo) TO genre,
+        COALESCE(localidade, provincia) TO region,
+        SAVE RELATION autor.id AS autor_id character(25) EQUALS authority.id bigint
+    TABLE contact:
+        localidade TO city,
+        email TO email,
+        COALESCE(mobil, telf_casa, telf_trab, fax) TO phone,
+        cp TO postal_code, 
+        provincia TO province,
+        rua TO street,
+        inter_web TO web,
+        SAVE RELATION autor.id AS autor_id character(25) EQUALS contact.id bigint
+) FOREIGN KEY authority.contact REFERENCES contact.id;
+
+MAP alias TO alias (
+    CONCAT(' ', nome_alias, apelidos_alias) TO alias,
+    principal TO principal,
+    id_autor TO authority_id FOREIGN KEY authority(id),
+    SAVE RELATION alias.id_autor AS autor_id character(25) EQUALS alias.id bigint
+) GET authority_id FROM authority.id WHERE autor_id = id_autor;
+
+MAP usuario TO  collaborator (
+    null TO email,
+    login TO login,
+    password TO password,
+    SAVE RELATION usuario.login AS usuario_login character(25) EQUALS collaborator.id bigint
+);
+
+ATTRIBUTE autor(foto) TO TABLE files (
+    foto TO file_download_uri,
+    SPLIT(foto,'.',1) TO file_name,
+    SPLIT(foto,'.',2) TO file_type,
+    SAVE RELATION autor.id AS autor_id character(25) EQUALS authority.id bigint
+) FOREIGN KEY authority.photo REFERENCES files.id;
+
+UPDATE authority SET files_id = ( 
+    id FROM files.autor_id = aux.authority.autor_id 
+    WHERE authority_id = authority.id);
+
+MAP edicion TO edition (
+    data_envio TO creation_date, 
+    false TO draft, 
+    null TO observations, 
+    null TO publishment_date, 
+    null TO release_date, 
+    false TO revised, 
+    null TO title, 
+    null TO cover, 
+    null TO creator, 
+    null TO reviewer, 
+    isbn TO isbn, 
+    SPLIT(ano,'-',1) TO beginning_year, 
+    null TO 'extension', 
+    SPLIT(ano,'-',1) TO finishing_year, 
+    'Galego' TO language, 
+    null TO legal_deposit, 
+    null TO 'number', 
+    null TO physical_description, 
+    false TO probable, 
+    null TO textual_year, 
+    null TO type, 
+    null TO 'year', 
+    null TO collection, 
+    null TO location, 
+    SAVE RELATION edicion.id AS id_edicion character(25) EQUALS edition.id bigint, 
+    SAVE RELATION edicion.id_obra AS id_obra character(25) EQUALS work.id bigint
+);
+
+MAP obra TO work (
+    data_envio TO creation_date, 
+    false TO draft, 
+    observacions TO observations, 
+    null TO publishment_date, 
+    null TO release_date, 
+    true TO revised, 
+    titulo TO title, 
+    null TO cover, 
+    null TO creator, 
+    null TO reviewer, 
+    null TO cdu, 
+    null TO genre, 
+    null TO lycense, 
+    CONCAT(', ', tipo, subxenero) TO type,  
+    SAVE RELATION obra.id_obra AS id_obra character(25) EQUALS work.id bigint
+);
+
+ATTRIBUTE obra(imaxe) TO TABLE files (
+    null TO creation_date,
+    SPLIT(imaxe,'.',1) TO path,
+    SPLIT(imaxe,'.',2) TO file_name,
+    false TO temporary,
+    null TO uuid,
+    SAVE RELATION obra.id AS obra_id character(25) EQUALS work.id bigint
+) FOREIGN KEY work.cover REFERENCES files.id;
+
+MAP autor_obra TO authority_element (
+    'Author' TO role,
+    null TO authority,
+    null TO element,
+    SAVE RELATION autor_obra.id_autor AS autor_id character(25) EQUALS authority_element.authority_id bigint,
+    SAVE RELATION autor_obra.id_obra AS obra_id character(25) EQUALS authority_element.elemet_id bigint
+);
+
+UPDATE authority_element SET authority = (
+    id FROM alias.authority_id = aux.authority.id
+    WHERE id = authority_element.autor_id
+);
+
+UPDATE authority_element SET element = (
+    id FROM work.authoridity_id = aux.work.work_id
+    WHERE obra_id = authority_element.obra_id
+);
+
+GENERATE SCRIPT bvg;

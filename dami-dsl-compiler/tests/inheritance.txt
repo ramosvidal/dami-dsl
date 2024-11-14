@@ -1,0 +1,21 @@
+CREATE BIDI bvg;
+
+CREATE CONNECTION (dbname bvg, host localhost, port 5432, user postgres, pwd postgres);
+
+IMPORT SCHEMA public INTO old;
+
+CREATE SCHEMA aux AUTHORIZATION postgres;
+
+MAP usuario TO  collaborator (
+    null TO email,
+    login TO login,
+    password TO password
+) KEEPING (collaborator.collaborator_id bigint = collaborator.login character(25));
+
+DROP SCHEMA aux;
+
+DROP SCHEMA old;
+
+DROP CONNECTION;
+
+GENERATE SCRIPT bvg;

@@ -1,0 +1,101 @@
+{
+  "name": "models",
+  "connectionFrom": {
+    "dbname": "dsl_models",
+    "host": "chronos",
+    "port": "5432",
+    "user": "dramos",
+    "password": "dramos",
+    "schema": "legacy",
+    "auxiliarSchema": "aux",
+    "originalSchema": "legacy"
+  },
+  "connectionTo": {
+    "dbname": "dsl_models",
+    "host": "chronos",
+    "port": "5432",
+    "user": "dramos",
+    "password": "dramos",
+    "schema": "target",
+    "auxiliarSchema": null
+  },
+  "schemas": [
+    {
+      "name": "legacy",
+      "entities": []
+    },
+    {
+      "name": "target",
+      "entities": []
+    },
+    {
+      "name": "aux",
+      "entities": [
+        {
+          "name": "publication",
+          "properties": [],
+          "columns": [
+            "publication_code",
+            "id_publication"
+          ],
+          "mappings": [
+            "code",
+            "id_publication"
+          ]
+        },
+        {
+          "name": "publication",
+          "properties": [],
+          "columns": [],
+          "mappings": []
+        },
+        {
+          "name": "publication",
+          "properties": [],
+          "columns": [],
+          "mappings": []
+        },
+        {
+          "name": "publication",
+          "properties": [],
+          "columns": [],
+          "mappings": []
+        }
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "name": "author",
+      "properties": [],
+      "columns": [],
+      "mappings": []
+    },
+    {
+      "name": "publisher",
+      "properties": [],
+      "columns": [],
+      "mappings": []
+    },
+    {
+      "name": "authorship",
+      "properties": [],
+      "columns": [],
+      "mappings": []
+    },
+    {
+      "name": "publication",
+      "properties": [],
+      "columns": [],
+      "mappings": []
+    },
+    {
+      "name": "paper",
+      "properties": [],
+      "columns": [],
+      "mappings": []
+    }
+  ],
+  "relationships": [],
+  "enums": []
+}

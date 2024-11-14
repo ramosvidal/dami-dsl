@@ -1,0 +1,375 @@
+{
+  "features": [
+    "GIS_SPL",
+    "DataManagement",
+    "GraphicalUserInterface",
+    "MapViewer",
+    "DM_SpatialDatabase",
+    "DM_DataServer",
+    "MV_Tools",
+    "MV_MapCenter",
+    "MV_T_Pan",
+    "MV_T_Zoom",
+    "DM_SD_PostGIS",
+    "GUI_Menu",
+    "GUI_Forms",
+    "GUI_F_Editable",
+    "GUI_F_Creatable",
+    "GUI_F_Removable",
+    "GUI_StaticPages",
+    "MV_T_ZoomWindow",
+    "MV_T_Measure",
+    "MV_T_M_Distance",
+    "MV_T_M_Line",
+    "MV_T_M_Polygon",
+    "MV_T_Export",
+    "MV_T_E_Type",
+    "MV_T_E_F_PDF",
+    "MV_T_E_F_URL",
+    "MV_T_E_SetScale",
+    "MV_T_InformationMode",
+    "MV_ContextInformation",
+    "MV_CI_Map",
+    "MV_CI_CenterCoordinates",
+    "MV_CI_Dimensions",
+    "MV_CI_Scale",
+    "MV_LayerManagement",
+    "MV_LM_CenterViewOnLayer",
+    "MV_LM_Order",
+    "MV_LM_HideLayer",
+    "MV_LM_Opacity",
+    "MV_LM_Style",
+    "MV_LM_ExternalLayer",
+    "MV_MC_BBox",
+    "MV_DetailOnClick",
+    "GUI_M_Top",
+    "Tools",
+    "T_GIS",
+    "MV_GeoJSON"
+  ],
+  "data": {
+    "basicData": {
+      "index": {
+        "component": "STATIC",
+        "view": "welcome"
+      },
+      "languages": [
+        "es",
+        "en",
+        "gl"
+      ],
+      "name": "WEBIST-Example",
+      "packageInfo": {
+        "artifact": "webistexample",
+        "group": "es.udc.lbd.gisspl"
+      },
+      "database": {},
+      "version": "0.1.0"
+    },
+    "dataModel": {
+      "enums": [],
+      "entities": [
+        {
+          "name": "Road",
+          "properties": [
+            {
+              "name": "id",
+              "class": "Long (autoinc)",
+              "pk": true,
+              "required": true,
+              "unique": true
+            },
+            {
+              "name": "status",
+              "class": "String"
+            },
+            {
+              "name": "path",
+              "class": "String"
+            },
+            {
+              "name": "municipality",
+              "class": "Municipality",
+              "owner": false,
+              "bidirectional": "roads",
+              "multiple": false,
+              "required": false
+            }
+          ],
+          "displayString": "$id"
+        },
+        {
+          "name": "AdministrativeOffice",
+          "properties": [
+            {
+              "name": "id",
+              "class": "Long (autoinc)",
+              "pk": true,
+              "required": true,
+              "unique": true
+            },
+            {
+              "name": "status",
+              "class": "String"
+            },
+            {
+              "name": "location",
+              "class": "Point"
+            },
+            {
+              "name": "municipality",
+              "class": "Municipality",
+              "owner": false,
+              "bidirectional": "offices",
+              "multiple": false,
+              "required": false
+            }
+          ],
+          "displayString": "$id"
+        },
+        {
+          "name": "Municipality",
+          "properties": [
+            {
+              "name": "id",
+              "class": "Long (autoinc)",
+              "pk": true,
+              "required": true,
+              "unique": true
+            },
+            {
+              "name": "name",
+              "class": "String"
+            },
+            {
+              "name": "extension",
+              "class": "MultiPolygon"
+            },
+            {
+              "name": "roads",
+              "class": "Road",
+              "owner": true,
+              "bidirectional": "municipality",
+              "multiple": true,
+              "required": false
+            },
+            {
+              "name": "offices",
+              "class": "AdministrativeOffice",
+              "owner": true,
+              "bidirectional": "municipality",
+              "multiple": true,
+              "required": false
+            }
+          ],
+          "displayString": "$name"
+        }
+      ]
+    },
+    "forms": [
+      {
+        "id": "Road Form",
+        "properties": [
+          {
+            "property": "id",
+            "viewing": true,
+            "editing": true
+          },
+          {
+            "property": "status",
+            "viewing": true,
+            "editing": true
+          },
+          {
+            "property": "path",
+            "viewing": true,
+            "editing": true
+          }
+        ],
+        "entity": "Road",
+        "creatable": true,
+        "editable": true,
+        "removable": true,
+        "confirmation": true
+      },
+      {
+        "id": "AdministrativeOffice Form",
+        "properties": [
+          {
+            "property": "id",
+            "viewing": true,
+            "editing": true
+          },
+          {
+            "property": "status",
+            "viewing": true,
+            "editing": true
+          },
+          {
+            "property": "location",
+            "viewing": true,
+            "editing": true
+          }
+        ],
+        "entity": "AdministrativeOffice",
+        "creatable": true,
+        "editable": true,
+        "removable": true,
+        "confirmation": true
+      },
+      {
+        "id": "Municipality Form",
+        "properties": [
+          {
+            "property": "id",
+            "viewing": true,
+            "editing": true
+          },
+          {
+            "property": "name",
+            "viewing": true,
+            "editing": true
+          },
+          {
+            "property": "extension",
+            "viewing": true,
+            "editing": true
+          },
+          {
+            "property": "roads",
+            "viewing": true,
+            "editing": true
+          },
+          {
+            "property": "offices",
+            "viewing": true,
+            "editing": true
+          }
+        ],
+        "entity": "Municipality",
+        "creatable": true,
+        "editable": true,
+        "removable": true,
+        "confirmation": true
+      }
+    ],
+    "gui": {
+      "settings": {
+        "font": {
+          "family": "Arial",
+          "size": "14px"
+        },
+        "colorset": [
+          "#fff",
+          "#eee",
+          "#777",
+          "#555",
+          "#577492",
+          "#333",
+          "#222"
+        ],
+        "header": {
+          "type": "Text",
+          "text": "WEBIST-Example"
+        }
+      },
+      "design": "1"
+    },
+    "lists": [
+      {
+        "id": "Road List",
+        "properties": [
+          {
+            "property": "id"
+          },
+          {
+            "property": "status"
+          },
+          {
+            "property": "path"
+          }
+        ],
+        "entity": "Road",
+        "form": false,
+        "removeLink": true,
+        "sorting": false,
+        "searching": false,
+        "filtering": false
+      },
+      {
+        "id": "AdministrativeOffice List",
+        "properties": [
+          {
+            "property": "id"
+          },
+          {
+            "property": "status"
+          }
+        ],
+        "entity": "AdministrativeOffice",
+        "form": false,
+        "removeLink": true,
+        "sorting": false,
+        "searching": false,
+        "filtering": false
+      },
+      {
+        "id": "Municipality List",
+        "properties": [
+          {
+            "property": "id"
+          },
+          {
+            "property": "name"
+          },
+          {
+            "property": "roads",
+            "form": "Road Form"
+          },
+          {
+            "property": "offices",
+            "form": "AdministrativeOffice Form"
+          }
+        ],
+        "entity": "Municipality",
+        "form": false,
+        "removeLink": true,
+        "sorting": false,
+        "searching": false,
+        "filtering": false
+      }
+    ],
+    "menus": [
+      {
+        "id": "top",
+        "elements": [
+          {
+            "id": "Components",
+            "type": "MENU",
+            "elements": [
+              {
+                "id": "Map viewer",
+                "type": "VIEW",
+                "view": {
+                  "component": "MAP",
+                  "view": "mapViewer"
+                }
+              }
+            ],
+            "access": {
+              "admin": true,
+              "logged": true
+            }
+          }
+        ]
+      }
+    ],
+    "maps": [],
+    "statics": [
+      {
+        "html": "<h1 style='text-align: center;'>Welcome page</h1>",
+        "id": "welcome"
+      }
+    ]
+  }
+}

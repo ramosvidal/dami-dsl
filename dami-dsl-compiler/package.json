@@ -1,0 +1,29 @@
+{
+  "name": "dsl-bidi-compiler",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "debug": "node --nolazy --inspect-brk=5858 index.js",
+    "predebug": "npm run compile grammars/BIDIGrammar.g4",
+    "full": "npm run compile grammars/BIDIGrammarLexer.g4 grammars/BIDIGrammarParser.g4",
+    "prestart": "npm run compile grammars/BIDIGrammar.g4",
+    "start": "node index.js",
+    "compile": "npm run antlr4-js",
+    "antlr4-js": "antlr4 -Dlanguage=JavaScript -lib grammars -o lib -visitor -Xexact-output-dir",
+    "antlr-example": "java -Xmx500M -cp 'C:\\java\\antlr-4.9-complete.jar' org.antlr.v4.Tool  -Dlanguage=JavaScript -lib grammars -o lib -visitor -Xexact-output-dir grammars/ECMAScript.g4"
+  },
+  "author": "Álex Cortiñas",
+  "license": "MIT",
+  "dependencies": {
+    "antlr4": "^4.7.2",
+    "spl-js-engine": "latest"
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "prettier": "^1.19.1"
+  }
+}

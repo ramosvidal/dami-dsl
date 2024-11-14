@@ -1,0 +1,325 @@
+{
+  "name": "bvg",
+  "connectionFrom": {
+    "dbname": "bvg",
+    "host": "",
+    "port": "port",
+    "user": "user",
+    "password": "pwd",
+    "schema": ",",
+    "auxiliarSchema": "aux",
+    "originalSchema": "old"
+  },
+  "connectionTo": {
+    "dbname": "bvg_bidi",
+    "host": "",
+    "port": "port",
+    "user": "user",
+    "password": "pwd",
+    "schema": ",",
+    "auxiliarSchema": null
+  },
+  "schemas": [
+    {
+      "name": "old",
+      "entities": []
+    },
+    {
+      "name": ",",
+      "entities": []
+    },
+    {
+      "name": "aux",
+      "entities": [
+        {
+          "name": "authority",
+          "properties": [],
+          "columns": [
+            "authority_id",
+            "autor_id"
+          ],
+          "mappings": [
+            "id",
+            "autor_id",
+            "id",
+            "autor_id"
+          ]
+        },
+        {
+          "name": "contact",
+          "properties": [],
+          "columns": [
+            "contact_id",
+            "autor_id"
+          ],
+          "mappings": [
+            "id",
+            "autor_id"
+          ]
+        },
+        {
+          "name": "alias",
+          "properties": [],
+          "columns": [
+            "alias_id",
+            "autor_id"
+          ],
+          "mappings": [
+            "id",
+            "autor_id"
+          ]
+        },
+        {
+          "name": "collaborator",
+          "properties": [],
+          "columns": [
+            "collaborator_id",
+            "usuario_login"
+          ],
+          "mappings": [
+            "id",
+            "usuario_login"
+          ]
+        },
+        {
+          "name": "authority",
+          "properties": [],
+          "columns": [],
+          "mappings": []
+        },
+        {
+          "name": "edition",
+          "properties": [],
+          "columns": [
+            "edition_id",
+            "id_edicion"
+          ],
+          "mappings": [
+            "id",
+            "id_edicion"
+          ]
+        },
+        {
+          "name": "work",
+          "properties": [],
+          "columns": [
+            "work_id",
+            "id_obra",
+            "obra_id"
+          ],
+          "mappings": [
+            "id",
+            "id_obra",
+            "id",
+            "id_obra",
+            "id",
+            "obra_id"
+          ]
+        },
+        {
+          "name": "work",
+          "properties": [],
+          "columns": [],
+          "mappings": []
+        },
+        {
+          "name": "work",
+          "properties": [],
+          "columns": [],
+          "mappings": []
+        },
+        {
+          "name": "authority_element",
+          "properties": [],
+          "columns": [
+            "authority_element_authority_id",
+            "autor_id",
+            "authority_element_elemet_id",
+            "obra_id"
+          ],
+          "mappings": [
+            "authority_id",
+            "autor_id",
+            "elemet_id",
+            "obra_id"
+          ]
+        },
+        {
+          "name": "authority_element",
+          "properties": [],
+          "columns": [],
+          "mappings": []
+        }
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "name": "authority",
+      "properties": [],
+      "columns": [
+        "name",
+        "gender",
+        "birthdate",
+        "deathdate",
+        "century",
+        "genre",
+        "region",
+        "autor_id"
+      ],
+      "mappings": [
+        "nome_real",
+        "sexo",
+        "dia_nac",
+        "ano_mor",
+        "seculo",
+        "narrativa",
+        "localidade",
+        "id"
+      ]
+    },
+    {
+      "name": "contact",
+      "properties": [],
+      "columns": [
+        "city",
+        "email",
+        "phone",
+        "postal_code",
+        "province",
+        "street",
+        "web",
+        "autor_id"
+      ],
+      "mappings": [
+        "localidade",
+        "email",
+        "mobil",
+        "cp",
+        "provincia",
+        "rua",
+        "inter_web",
+        "id"
+      ]
+    },
+    {
+      "name": "alias",
+      "properties": [],
+      "columns": [
+        "alias",
+        "principal",
+        "authority_id",
+        "autor_id"
+      ],
+      "mappings": [
+        "nome_alias",
+        "principal",
+        "id_autor",
+        "id_autor"
+      ]
+    },
+    {
+      "name": "collaborator",
+      "properties": [],
+      "columns": [
+        "login",
+        "password",
+        "usuario_login"
+      ],
+      "mappings": [
+        "login",
+        "password",
+        "login"
+      ]
+    },
+    {
+      "name": "files",
+      "properties": [],
+      "columns": [
+        "file_download_uri",
+        "file_name",
+        "file_type",
+        "autor_id",
+        "path",
+        "temporary",
+        "obra_id"
+      ],
+      "mappings": [
+        "foto",
+        "foto",
+        "foto",
+        "id",
+        "imaxe",
+        "imaxe",
+        "false",
+        "id"
+      ]
+    },
+    {
+      "name": "edition",
+      "properties": [],
+      "columns": [
+        "creation_date",
+        "draft",
+        "revised",
+        "isbn",
+        "beginning_year",
+        "finishing_year",
+        "language",
+        "probable",
+        "id_edicion",
+        "id_obra"
+      ],
+      "mappings": [
+        "data_envio",
+        "false",
+        "false",
+        "isbn",
+        "ano",
+        "ano",
+        "'Galego'",
+        "false",
+        "id",
+        "id_obra"
+      ]
+    },
+    {
+      "name": "work",
+      "properties": [],
+      "columns": [
+        "creation_date",
+        "draft",
+        "observations",
+        "revised",
+        "title",
+        "type",
+        "id_obra"
+      ],
+      "mappings": [
+        "data_envio",
+        "false",
+        "observacions",
+        "true",
+        "titulo",
+        "tipo",
+        "id_obra"
+      ]
+    },
+    {
+      "name": "authority_element",
+      "properties": [],
+      "columns": [
+        "role",
+        "autor_id",
+        "obra_id"
+      ],
+      "mappings": [
+        "'Author'",
+        "id_autor",
+        "id_obra"
+      ]
+    }
+  ],
+  "relationships": [],
+  "enums": []
+}

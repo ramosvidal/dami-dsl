@@ -1,0 +1,25 @@
+CREATE BIDI bvg;
+
+CREATE CONNECTION (dbname bvg, host localhost, port 5432, user postgres, password postgres);
+
+IMPORT SCHEMA public INTO old;
+
+CREATE SCHEMA aux AUTHORIZATION postgres;
+
+MAP autor TO authority (
+    CONCAT(' ', nome_real, apelidos_real) WITH ('') AS NULL TO name,
+    REPLACE('H' with 'home', 'M' with 'muller') TO gender,
+    CONCAT('/', dia_nac, mes_nac, ano_nac) TO birthdate,
+    ano_mor TO deathdate,
+    seculo TO century,
+    narrativa TO genre,
+    localidade TO region
+) KEEPING (autor.id character(25) = authority.id bigint);
+
+DROP SCHEMA aux;
+
+DROP SCHEMA old;
+
+DROP CONNECTION;
+
+GENERATE SCRIPT bvg;

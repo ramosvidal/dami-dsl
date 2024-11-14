@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<featureModel>
+	<properties>
+		<graphics key="legendautolayout" value="true"/>
+		<graphics key="showshortnames" value="false"/>
+		<graphics key="layout" value="vertical"/>
+		<graphics key="showcollapsedconstraints" value="true"/>
+		<graphics key="legendhidden" value="false"/>
+		<graphics key="layoutalgorithm" value="4"/>
+	</properties>
+	<struct>
+		<and abstract="true" mandatory="true" name="BIDIFeatures">
+			<and mandatory="true" name="LibraryObjects">
+				<and mandatory="true" name="LO_Element">
+					<feature name="LO_E_SchedulingPublication"/>
+					<and abstract="true" mandatory="true" name="LO_E_ElementTypes">
+						<feature mandatory="true" name="LO_E_ET_Work"/>
+						<and mandatory="true" name="LO_E_ET_Edition">
+							<and name="LO_E_LocationManagement">
+								<feature name="LO_E_HistoricalLocation"/>
+								<feature name="LO_E_GeographicalLocation"/>
+							</and>
+						</and>
+						<feature name="LO_E_ET_Part"/>
+						<feature name="LO_E_ET_Collection"/>
+					</and>
+					<and name="LO_E_DigitalResource">
+						<or abstract="true" mandatory="true" name="LO_E_DR_FileTypesSupported">
+							<feature name="LO_E_DR_ExternalLinks"/>
+							<feature name="LO_E_DR_EPUB"/>
+							<feature name="LO_E_DR_Video"/>
+							<feature name="LO_E_DR_Audio"/>
+							<feature name="LO_E_DR_PDF"/>
+							<feature name="LO_E_DR_DigitalizedPages"/>
+						</or>
+						<feature name="LO_E_DR_Collections"/>
+					</and>
+				</and>
+				<and mandatory="true" name="LO_Authority">
+					<feature name="LO_A_Alias"/>
+					<and name="LO_A_Contacts">
+						<feature name="LO_A_SocialNetwork"/>
+					</and>
+					<or mandatory="true" name="LO_A_Role">
+						<feature name="LO_A_RoleAuthor"/>
+						<feature name="LO_A_RoleEditor"/>
+						<feature name="LO_A_RolePrinter"/>
+						<feature name="LO_A_RoleIllustrator"/>
+						<feature name="LO_A_RoleTranslator"/>
+						<feature name="LO_A_RoleProloguist"/>
+					</or>
+				</and>
+				<and name="LO_Organization">
+					<feature name="LO_O_Director"/>
+					<or mandatory="true" name="LO_O_Role">
+						<feature name="LO_O_RoleLibrary"/>
+						<feature name="LO_O_RoleEditorial"/>
+					</or>
+				</and>
+			</and>
+			<and name="LibraryDataExportation">
+				<or mandatory="true" name="LDE_FileType">
+					<feature name="LDE_FT_PDF"/>
+					<feature name="LDE_FT_TXT"/>
+					<feature name="LDE_FT_JSON"/>
+					<feature name="LDE_FT_EXCEL"/>
+					<feature name="LDE_FT_CSV"/>
+				</or>
+				<or mandatory="true" name="LDE_Capabilities">
+					<feature name="LDE_C_SingleItem"/>
+					<feature name="LDE_C_SelectionOfItems"/>
+				</or>
+				<or mandatory="true" name="LDE_ExportableElements">
+					<feature name="LDE_EE_Authority"/>
+					<feature name="LDE_EE_Collection"/>
+					<feature name="LDE_EE_Edition"/>
+					<feature name="LDE_EE_Work"/>
+					<feature name="LDE_EE_Part"/>
+					<feature name="LDE_EE_Organization"/>
+				</or>
+			</and>
+			<and mandatory="true" name="UserManagement">
+				<feature name="UM_UserProfiles"/>
+				<and abstract="true" mandatory="true" name="UM_UserRoles">
+					<and mandatory="true" name="UM_UR_Admin">
+						<feature name="UM_UR_AdminReviewsElements"/>
+						<feature name="UM_UR_AdminManagesStaticPages"/>
+					</and>
+					<and name="UM_UR_Collaborators">
+						<feature name="UM_UR_CollaboratorsOnlyManageOwnContent"/>
+						<feature name="UM_UR_CollaboratorsCanManageThesauri"/>
+					</and>
+					<and name="UM_UR_Reporters">
+						<feature name="UM_UR_ReportersCanFavoriteElements"/>
+						<feature name="UM_UR_ReportersCanFavoriteAuthors"/>
+					</and>
+					<and mandatory="true" name="UM_UR_Anonymous">
+						<feature name="UM_UR_AnonymousCanAccessElementFiles"/>
+					</and>
+				</and>
+				<and name="UM_AnonymousRegistration">
+					<feature name="UM_AR_AdminNeedsToValidate"/>
+					<or abstract="true" name="UM_AR_SocialRegistration">
+						<feature name="UM_AR_SR_Facebook"/>
+						<feature name="UM_AR_SR_Twitter"/>
+						<feature name="UM_AR_SR_Google"/>
+					</or>
+				</and>
+			</and>
+			<and name="LibraryAccess">
+				<and mandatory="true" name="PublicAccess">
+					<and name="PA_Search">
+						<xor name="PA_SearchResult">
+							<and name="PA_SR_Edition">
+								<xor mandatory="true" name="PA_SE_E_Format">
+									<feature name="PA_SR_E_F_AsList"/>
+									<feature name="PA_SR_E_F_AsMap"/>
+								</xor>
+							</and>
+							<feature name="PA_SR_Works"/>
+							<feature name="PA_SR_Authority"/>
+						</xor>
+						<or name="PA_S_Advanced">
+							<feature name="PA_S_A_ByTitle"/>
+							<and name="PA_S_A_ByAuthority">
+								<or name="PA_S_A_BA_Role">
+									<feature name="PA_S_A_BA_R_ByAuthor"/>
+									<feature name="PA_S_A_BA_R_ByEditor"/>
+									<feature name="PA_S_A_BA_R_ByCustom"/>
+								</or>
+							</and>
+							<feature name="PA_S_A_ByLocation"/>
+							<feature name="PA_S_A_ByLanguage"/>
+							<and name="PA_S_A_ByDate">
+								<feature name="PA_S_A_ByDateRange"/>
+							</and>
+							<feature name="PA_S_A_ByIdentifier"/>
+							<feature name="PA_S_A_ByISBN"/>
+							<feature name="PA_S_A_ByContent"/>
+						</or>
+						<or name="PA_S_Simple">
+							<feature name="PA_S_S_ByTitle"/>
+							<feature name="PA_S_S_ByAuthor"/>
+							<feature name="PA_S_S_ByYear"/>
+							<feature name="PA_S_S_ByLocation"/>
+						</or>
+					</and>
+					<and mandatory="true" name="PA_Navigation">
+						<xor mandatory="true" name="PA_N_HomePage">
+							<feature name="PA_N_HP_Editions"/>
+							<feature name="PA_N_HP_Works"/>
+							<feature name="PA_N_HP_Authorities"/>
+							<feature name="PA_N_HP_PresentationPage"/>
+							<feature name="PA_N_HP_LatestPublicationsPage"/>
+						</xor>
+						<and name="PA_N_Lists">
+							<or name="PA_N_L_Editions">
+								<feature name="PA_N_L_E_AsList"/>
+								<feature name="PA_N_L_E_AsImages"/>
+							</or>
+							<or name="PA_N_L_Works">
+								<feature name="PA_N_L_W_AsList"/>
+								<feature name="PA_N_L_W_AsImages"/>
+							</or>
+							<or name="PA_N_L_Authorities">
+								<feature name="PA_N_L_A_AsList"/>
+								<feature name="PA_N_L_A_AsImages"/>
+							</or>
+							<and name="PA_N_L_Pagination">
+								<or name="PA_N_L_P_Editions">
+									<feature name="PA_N_L_P_E_InfiniteScroll"/>
+									<feature name="PA_N_L_P_E_StandardPagination"/>
+									<feature name="PA_N_L_P_E_AlphabeticRangePagination"/>
+								</or>
+								<or name="PA_N_L_P_Works">
+									<feature name="PA_N_L_P_W_InfiniteScroll"/>
+									<feature name="PA_N_L_P_W_StandardPagination"/>
+									<feature name="PA_N_L_P_W_AlphabeticRangePagination"/>
+								</or>
+								<or name="PA_N_L_P_Authorities">
+									<feature name="PA_N_L_P_A_InfiniteScroll"/>
+									<feature name="PA_N_L_P_A_StandardPagination"/>
+									<feature name="PA_N_L_P_A_AlphabeticRangePagination"/>
+								</or>
+							</and>
+						</and>
+					</and>
+					<feature name="PA_Maps"/>
+				</and>
+				<and mandatory="true" name="ManagementAccess">
+					<and name="MA_Search">
+						<or name="MA_S_Advanced">
+							<feature name="MA_S_A_ByElementTitle"/>
+							<and name="MA_S_A_ByElementAuthority">
+								<feature name="MA_S_A_NoAuthority"/>
+							</and>
+							<feature name="MA_S_A_ByDraft"/>
+							<feature name="MA_S_A_ByRevised"/>
+							<feature name="MA_S_A_ByElementId"/>
+							<feature name="MA_S_A_ByElementISBN"/>
+							<and name="MA_S_A_ByElementYear">
+								<feature name="MA_S_A_NoYear"/>
+							</and>
+							<feature name="MA_S_A_ByGenre"/>
+							<and name="MA_S_A_ByEditionLocation">
+								<feature name="MA_S_A_NoEditionLocation"/>
+							</and>
+						</or>
+					</and>
+					<and name="MA_Lists">
+						<and name="MA_L_Filter">
+							<feature name="MA_L_F_Collaborators"/>
+							<feature name="MA_L_F_Reporters"/>
+							<feature name="MA_L_F_Elements"/>
+						</and>
+						<feature name="MA_L_AlphabeticRangePagination"/>
+					</and>
+					<feature name="MA_LibraryUsageStatistics"/>
+					<feature name="MA_MapSearch"/>
+				</and>
+			</and>
+			<xor mandatory="true" name="Language">
+				<feature name="L_Spanish"/>
+				<feature name="L_English"/>
+				<feature name="L_Galician"/>
+			</xor>
+		</and>
+	</struct>
+	<constraints>
+		<rule>
+			<imp>
+				<var>PA_S_A_BA_R_ByAuthor</var>
+				<var>LO_A_Role</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>PA_S_A_BA_R_ByEditor</var>
+				<var>LO_A_RoleEditor</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>PA_Maps</var>
+				<var>LO_E_GeographicalLocation</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>PA_SR_E_F_AsMap</var>
+				<var>LO_E_GeographicalLocation</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>LO_E_DR_DigitalizedPages</var>
+				<var>LO_E_DR_Collections</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>PA_S_S_ByAuthor</var>
+				<var>LO_A_RoleAuthor</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>MA_MapSearch</var>
+				<var>LO_E_GeographicalLocation</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>LDE_EE_Collection</var>
+				<var>LO_E_ET_Collection</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>LDE_EE_Part</var>
+				<var>LO_E_ET_Part</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>PA_N_HP_Editions</var>
+				<var>PA_N_L_Editions</var>
+			</imp>
+		</rule>
+		<rule>
+			<imp>
+				<var>PA_N_HP_Authorities</var>
+				<var>PA_N_L_Authorities</var>
+			</imp>
+		</rule>
+	</constraints>
+</featureModel>

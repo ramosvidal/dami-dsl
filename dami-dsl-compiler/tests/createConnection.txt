@@ -1,0 +1,7 @@
+CREATE BIDI bvg;
+
+CREATE CONNECTION (dbname bvg, host localhost, port 5432, user postgres, password postgres);
+
+DROP CONNECTION;
+
+GENERATE SCRIPT bvg;

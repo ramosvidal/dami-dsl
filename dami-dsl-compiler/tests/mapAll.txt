@@ -1,0 +1,19 @@
+CREATE PRODUCT mapall;
+
+CREATE CONNECTION FROM (dbname bvg, host localhost, port 5432, user postgres, pwd postgres, schema public);
+
+CREATE CONNECTION TO (dbname bvg, host localhost, port 5432, user postgres, pwd postgres, schema public);
+
+IMPORT SCHEMA public INTO old;
+
+CREATE SCHEMA aux AUTHORIZATION postgres;
+
+MAP ALL PROPERTIES autor TO authority;
+
+DROP SCHEMA aux;
+
+DROP SCHEMA old;
+
+DROP CONNECTION;
+
+GENERATE SCRIPT mapall;

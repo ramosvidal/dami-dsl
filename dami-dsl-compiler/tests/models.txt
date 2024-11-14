@@ -1,0 +1,100 @@
+CREATE PRODUCT models;
+
+CREATE CONNECTION FROM (dbname dsl_models, host chronos, port 5432, user dramos, pwd dramos, schema legacy);
+
+CREATE CONNECTION TO (dbname dsl_models, host chronos, port 5432, user dramos, pwd dramos, schema target);
+
+MAP researcher TO author (
+    rese_id TO code,
+    rese_name TO name,
+    rese_first_surname TO lastname1,
+    rese_sec_surname TO lastname2
+);
+
+MAP publication TO publisher (
+    SQL: "distinct pub_edit" TO name
+);
+
+INSERT INTO publicationtype(name) = LIBRO, CAPÍTULO, REVISTA, CONGRESO;
+
+MAP publication_writer TO authorship (
+    pub_id TO paper_doi,
+    rese_id TO author_code,
+    pwrit_ord TO orderofauthor
+);
+
+MAP publication, book_chapter, country TO publication (
+    pub_id TO code,
+    chap_book_tit TO title,
+    pub_loc TO place,
+    pub_year TO year,
+    'CAPÍTULO' TO publicationtype_name,
+    pub_edit TO publisher_name,
+    cntry_name_es TO country,
+    SAVE RELATION publication.pub_id AS id_publication int EQUALS publication.code int
+) WHERE (pub_id=chapt_id AND pub_cntry=cntry_id);
+
+MAP publication, book, country TO publication (
+    pub_id TO code,
+    pub_title TO title,
+    pub_loc TO place,
+    pub_year TO year,
+    'LIBRO' TO publicationtype_name,
+    pub_edit TO publisher_name,
+    cntry_name_es TO country,
+    SAVE RELATION publication.pub_id AS id_publication int EQUALS publication.code int
+) WHERE (pub_id=book_id AND pub_cntry=cntry_id);
+
+MAP publication, journal, country TO publication (
+    pub_id TO code,
+    SQL:"trim(jrnl_journ_title)" TO title,
+    pub_loc TO place,
+    pub_year TO year,
+    'REVISTA' TO publicationtype_name,
+    pub_edit TO publisher_name,
+    cntry_name_es TO country,
+    SAVE RELATION publication.pub_id AS id_publication int EQUALS publication.code int
+) WHERE (pub_id=jrnl_id AND pub_cntry=cntry_id);
+
+MAP publication, conference, country TO publication (
+    pub_id TO code,
+    conf_name TO title,
+    pub_loc TO place,
+    pub_year TO year,
+    'CONGRESO' TO publicationtype_name,
+    pub_edit TO publisher_name,
+    cntry_name_es TO country,
+    SAVE RELATION publication.pub_id AS id_publication int EQUALS publication.code int
+) WHERE (pub_id=conf_id AND pub_cntry=cntry_id);
+
+MAP publication, book_chapter TO paper (
+    pub_title TO title,
+    pub_id TO doi,
+    chapt_start_page TO startpage,
+    chart_end_page TO endpage
+) WHERE (pub_id=chapt_id)
+GET publication_code FROM publication.code WHEN id_publication=pub_id;
+
+MAP publication, book TO paper (
+    pub_title TO title,
+    pub_id TO doi
+) WHERE (pub_id=book_id)
+GET publication_code FROM publication.code WHEN id_publication=pub_id;
+
+MAP publication, journal TO paper (
+    pub_title TO title,
+    pub_id TO doi,
+    jrnl_start_page TO startpage,
+    jrnl_end_page TO endpage
+) WHERE (pub_id=jrnl_id)
+GET publication_code FROM publication.code WHEN id_publication=pub_id;
+
+MAP publication, conference TO paper (
+    pub_title TO title,
+    pub_id TO doi,
+    conf_start_page TO startpage,
+    conf_end_page TO endpage
+) WHERE (pub_id=conf_id)
+GET publication_code FROM publication.code WHEN id_publication=pub_id;
+
+GENERATE SCRIPT models;

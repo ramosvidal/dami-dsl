@@ -1,0 +1,61 @@
+{
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "angular"
+    ],
+    "globals": {
+        "L": false
+    },
+    "rules": {
+        "eol-last": 2,
+        "eqeqeq": 1,
+        "indent": 2,
+        "linebreak-style": 0,
+        "no-irregular-whitespace": 2,
+        "no-multi-str": 2,
+        "no-unused-vars": [
+            1,
+            {
+                "args": "all",
+                "vars": "all"
+            }
+        ],
+        "no-use-before-define": [
+            2,
+            "nofunc"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            2,
+            "always"
+        ],
+        "object-curly-spacing": [
+            "error",
+            "always",
+            {
+                "arraysInObjects": false,
+                "objectsInObjects": false
+            }
+        ],
+        "array-bracket-spacing": [
+            "error",
+            "always",
+            {
+                "arraysInArrays": false,
+                "objectsInArrays": false,
+                "singleValue": true
+            }
+        ],
+        "wrap-iife": [
+            2,
+            "inside"
+        ]
+    }
+}
